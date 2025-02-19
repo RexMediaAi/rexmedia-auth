@@ -1,0 +1,30 @@
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload"
+     data-client_id="853914274081-fqmuk1gsobuvsd4io1phu2dmgftrtqr3.apps.googleusercontent.com"
+     data-login_uri="https://rexmediaai.github.io/rexmedia-auth/" 
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false">
+</div>
+<div class="g_id_signin"
+     data-type="standard"
+     data-size="large"
+     data-theme="outline"
+     data-text="sign_in_with"
+     data-shape="rectangular"
+     data-logo_alignment="left">
+</div>
+
+<script>
+  function handleCredentialResponse(response) {
+    fetch("https://idkhadar.app.n8n.cloud/webhook-test/google-auth", { 
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id_token: response.credential })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Response from n8n:", data))
+    .catch(err => console.error("Error:", err));
+  }
+</script>
